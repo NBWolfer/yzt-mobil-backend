@@ -24,10 +24,13 @@ class Item(BaseModel):
     price: float
 
 @app.post("/create/", tags=["createItem"])
-async def create_item(item: Item):
+async def create_item(item: Item = None):
     db = get_db()
     collection = db["yzt-mobil-backend"]
-    result = collection.insert_one(item.dict())
+    if item is None:
+        result = collection.insert_one({"name": "test", "price": 0.0})
+    else:
+        result = collection.insert_one(item.dict())
     if result.acknowledged:
         return {"id": str(result.inserted_id)}
     else:
