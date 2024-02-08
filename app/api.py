@@ -1,9 +1,10 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
+import dotenv
 
 # Replace the placeholder with your Atlas connection string
-uri = "mongodb+srv://enes__:WFDjPW0tqyOYvovZ@clusternbw.z4bdewm.mongodb.net/?retryWrites=true&w=majority"
+uri = dotenv.get_key(dotenv.find_dotenv(), "MONGODB_URI")
 
 # Create a new client and connect to the server
 def get_db():
