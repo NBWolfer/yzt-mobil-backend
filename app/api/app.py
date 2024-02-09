@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 import dotenv
+from api.routes import test
 
 # Replace the placeholder with your Atlas connection string
 uri = dotenv.get_key(dotenv.find_dotenv(), "MONGODB_URI")
@@ -35,3 +36,6 @@ async def create_item(item: Item = None):
         return {"id": str(result.inserted_id)}
     else:
         raise HTTPException(status_code=400, detail="Item not inserted")
+
+
+app.include_router(test.router)
